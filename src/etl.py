@@ -1,7 +1,19 @@
 from config import PATHS, VARIABLES
-from etl import prepare_data
-from model import model_linear, evaluate
 import pandas as pd
+from sklearn.model_selection import train_test_split
+
+
+def load_data(path):
+    return pd.read_csv(path)
+
+
+def prepare_data(df, label_name, train_test_ratio, random_seed):
+    columns = df.columns
+    df = df.drop(["key", "pickup_datetime"], axis=1)
+    X = df.drop(label_name, axis=1)
+    y = df[label_name]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=train_test_ratio, random_state=random_seed)
+    return {"X_train": X_train, "X_test": X_test, "y_train": y_train, "y_test": y_test}
 
 
 def main():
@@ -11,19 +23,11 @@ def main():
     train_test_ratio = VARIABLES["train_test_ratio"]
     df = pd.read_csv(sample_path)
     print(df.head())
-
-    print("The dataframe has the following shape: {}".format(df.shape))
-    df.dropna(inplace=True)
+    print(df.describe())
     print("The dataframe has the following shape: {}".format(df.shape))
     data = prepare_data(df, label_name, train_test_ratio, random_seed)
-
     print(data["X_train"].head())
     print(data["y_train"].head())
-
-    model = model_linear(data)
-    evaluate_scores = evaluate(data, model)
-    print(evaluate_scores)
-
     return
 
 
