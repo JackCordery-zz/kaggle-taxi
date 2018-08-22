@@ -12,18 +12,20 @@ def model_linear(data):
 
 
 def predict(data, regressor):
-    X_test = data["X_test"]
+    X_test = data["X_val"]
     y_pred = regressor.predict(X_test)
     return y_pred
 
 
 def evaluate(data, regressor):
-    y_test = data["y_test"]
+    y_test = data["y_val"]
+    coef_names = data["X_train"].columns
     y_pred = predict(data, regressor)
 
     mse = sqrt(mean_squared_error(y_test, y_pred))
     r2 = r2_score(y_test, y_pred)
-    return {"rmse": mse, "r2": r2, "coef": regressor.coef_}
+    coef = dict(zip(coef_names, regressor.coef_))
+    return {"rmse": mse, "r2": r2, "coef": coef}
 
 
 def main():
