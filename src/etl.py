@@ -1,4 +1,3 @@
-from config import PATHS, VARIABLES
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -8,7 +7,7 @@ def load_data(path):
 
 
 def prepare_data(df, label_name, train_test_ratio, random_seed):
-    columns = df.columns
+    df.dropna(inplace=True)
     df = df.drop(["key", "pickup_datetime"], axis=1)
     X = df.drop(label_name, axis=1)
     y = df[label_name]
@@ -17,17 +16,7 @@ def prepare_data(df, label_name, train_test_ratio, random_seed):
 
 
 def main():
-    sample_path = PATHS["sample"]
-    label_name = VARIABLES["label_name"]
-    random_seed = VARIABLES["random_seed"]
-    train_test_ratio = VARIABLES["train_test_ratio"]
-    df = pd.read_csv(sample_path)
-    print(df.head())
-    print(df.describe())
-    print("The dataframe has the following shape: {}".format(df.shape))
-    data = prepare_data(df, label_name, train_test_ratio, random_seed)
-    print(data["X_train"].head())
-    print(data["y_train"].head())
+    print("Nothing to see here: {}".format(__file__))
     return
 
 

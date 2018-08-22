@@ -1,5 +1,3 @@
-from config import PATHS, VARIABLES
-from etl import load_data
 from math import sqrt
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
@@ -29,11 +27,7 @@ def evaluate(data, regressor):
 
 
 def main():
-    sample_path = PATHS["sample"]
-    test_path = PATHS["test"]
-
-    sample_df = load_data(sample_path)
-    test_df = load_data(test_path)
+    print("Nothing to see here: {}".format(__file__))
     return
 
 
