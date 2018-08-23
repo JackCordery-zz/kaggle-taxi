@@ -6,8 +6,6 @@ def load_data(path):
     return pd.read_csv(path)
 
 
-
-
 def prepare_data(df, label_name, train_test_ratio, random_seed):
     df.dropna(inplace=True)
     df = df.drop(["key", "pickup_datetime"], axis=1)
