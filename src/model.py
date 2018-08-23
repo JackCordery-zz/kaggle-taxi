@@ -3,6 +3,13 @@ from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 
 
+def get_model_stats(y_test, y_pred, coef_names, regressor):
+    mse = sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+    coef = dict(zip(coef_names, regressor.coef_))
+    return {"rmse": mse, "r2": r2, "coef": coef}
+
+
 def model_linear(data):
     X_train = data["X_train"]
     y_train = data["y_train"]
@@ -22,10 +29,8 @@ def evaluate(data, regressor):
     coef_names = data["X_train"].columns
     y_pred = predict(data, regressor)
 
-    mse = sqrt(mean_squared_error(y_test, y_pred))
-    r2 = r2_score(y_test, y_pred)
-    coef = dict(zip(coef_names, regressor.coef_))
-    return {"rmse": mse, "r2": r2, "coef": coef}
+    stats = get_model_stats(y_test, y_pred, coef_names, regressor)
+    return stats
 
 
 def main():
